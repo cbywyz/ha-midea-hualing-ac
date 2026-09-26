@@ -47,6 +47,8 @@
 2. 解压后把 `custom_components/midea_auto_cloud` 整个目录复制到 HA 配置目录的 `custom_components/` 下。
 3. **重启 Home Assistant**。
 
+> **离线备用**：万一原仓库删除/改名/访问不畅，本仓库 [`vendor/`](vendor/) 目录里有 **v0.4.19 原包备份**（Apache-2.0 允许再分发，未做任何修改，来源与说明见 [vendor/README.md](vendor/README.md)），下载解压后同样按上面第 2 步安装。日常安装请优先用原仓库最新版。
+
 > 首次添加该集成时，HA 会自动安装依赖 `lupa`，需要能访问 PyPI（HA 容器默认走 Docker 网络出网）。如果安装失败，检查 HA 容器的网络 / 代理。
 
 ## 三、添加集成（配置流程）
