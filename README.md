@@ -227,6 +227,7 @@ HA 容器需要能访问美的云（`mp-prod.msmartlife.cn` 等）。检查容�
 
 - [cbywyz/ha-hualing-fan-broadlink](https://github.com/cbywyz/ha-hualing-fan-broadlink) —— 华凌**风扇**（WH-FGA2401）红外接入教程：Broadlink RM3 学码 + 全套遥控器编码库。风扇没有 WiFi，走不了本教程的云端方案，遥控器这些键的码都收录了。
 - [cbywyz/gree-yapqf-broadlink-smartir](https://github.com/cbywyz/gree-yapqf-broadlink-smartir) —— 格力空调（YAPQF）Broadlink + SmartIR 接入教程：本地红外控制路线，含码表坑排查与学码补键。
+- [cbywyz/phicomm-aircat-m1](https://github.com/cbywyz/phicomm-aircat-m1) —— 斐讯悟空 M1 空气检测仪本地复活（自建集成 + 温湿度/PM2.5/甲醛），空调面板的温湿度数据源好搭档。
 
 ## 十、参考与致谢
 
