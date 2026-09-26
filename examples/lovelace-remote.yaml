@@ -1,0 +1,336 @@
+# 华凌/美的空调（midea_auto_cloud 云端版）遥控器面板示例
+# 依赖卡片：
+#   - universal-remote-card (HACS: madmicio/universal-remote-card)
+#   - apexcharts-card       (HACS: RomRider/apexcharts-card)
+# 把实体 id 换成你自己的（设置 → 设备 → 华凌空调 → 点击实体可复制 id）
+
+climate 实体: &climate climate.fang_jian_kong_diao_wen_kong_qi
+
+type: vertical-stack
+cards:
+  # ---------- 状态条 ----------
+  - type: custom:mushroom-template-card
+    entity: *climate
+    primary: >-
+      室温 {{ states('sensor.fang_jian_kong_diao_dang_qian_wen_du') }}°C ·
+      设定 {{ state_attr('climate.fang_jian_kong_diao_wen_kong_qi', 'temperature') }}°C
+    secondary: >-
+      {% set p = states('sensor.fang_jian_kong_diao_shi_shi_gong_lu') %}
+      {% if p not in ['unknown','unavailable'] %}{{ p }} W · {% endif %}
+      本月 {{ states('sensor.fang_jian_kong_diao_ben_yue_hao_dian_liang') }} kWh ·
+      {{ '运行中' if states('climate.fang_jian_kong_diao_wen_kong_qi') not in ['off','unknown','unavailable'] else '已关闭' }}
+    icon: mdi:air-conditioner
+    icon_color: >-
+      {{ 'green' if states('climate.fang_jian_kong_diao_wen_kong_qi') not in ['off','unknown','unavailable'] else 'grey' }}
+    tap_action:
+      action: more-info
+
+  # ---------- 恒温器 ----------
+  - type: thermostat
+    entity: *climate
+    name: 华凌空调
+    features:
+      - type: climate-hvac-modes
+      - type: climate-fan-modes
+        style: dropdown
+      - type: climate-preset-modes
+        style: dropdown
+      - type: climate-swing-modes
+        style: dropdown
+
+  # ---------- 万能遥控器 ----------
+  - type: custom:universal-remote-card
+    title: 华凌空调遥控
+    custom_actions:
+      - type: button
+        name: h_on
+        icon: mdi:power
+        label: 开机
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.turn_on
+          target:
+            entity_id: *climate
+      - type: button
+        name: h_off
+        icon: mdi:power-off
+        label: 关机
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.turn_off
+          target:
+            entity_id: *climate
+      - type: button
+        name: h_cool
+        icon: mdi:snowflake
+        label: 制冷
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_hvac_mode
+          target:
+            entity_id: *climate
+          data:
+            hvac_mode: cool
+      - type: button
+        name: h_heat
+        icon: mdi:fire
+        label: 制热
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_hvac_mode
+          target:
+            entity_id: *climate
+          data:
+            hvac_mode: heat
+      - type: button
+        name: h_dry
+        icon: mdi:water-percent
+        label: 除湿
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_hvac_mode
+          target:
+            entity_id: *climate
+          data:
+            hvac_mode: dry
+      - type: button
+        name: h_fan
+        icon: mdi:fan
+        label: 送风
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_hvac_mode
+          target:
+            entity_id: *climate
+          data:
+            hvac_mode: fan_only
+      - type: button
+        name: h_auto
+        icon: mdi:autorenew
+        label: 自动
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_hvac_mode
+          target:
+            entity_id: *climate
+          data:
+            hvac_mode: auto
+      # 风速：云端集成的档位为 silent/low/medium/high/full/auto
+      - type: button
+        name: hw_si
+        icon: mdi:fan
+        label: 静音
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_fan_mode
+          target:
+            entity_id: *climate
+          data:
+            fan_mode: silent
+      - type: button
+        name: hw_lo
+        icon: mdi:fan
+        label: 低风
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_fan_mode
+          target:
+            entity_id: *climate
+          data:
+            fan_mode: low
+      - type: button
+        name: hw_me
+        icon: mdi:fan
+        label: 中风
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_fan_mode
+          target:
+            entity_id: *climate
+          data:
+            fan_mode: medium
+      - type: button
+        name: hw_hi
+        icon: mdi:fan
+        label: 高风
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_fan_mode
+          target:
+            entity_id: *climate
+          data:
+            fan_mode: high
+      - type: button
+        name: hw_fu
+        icon: mdi:fan
+        label: 全速
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_fan_mode
+          target:
+            entity_id: *climate
+          data:
+            fan_mode: full
+      - type: button
+        name: hw_au
+        icon: mdi:fan
+        label: 自动风
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_fan_mode
+          target:
+            entity_id: *climate
+          data:
+            fan_mode: auto
+      # 温度快捷键
+      - type: button
+        name: ht20
+        icon: mdi:thermometer
+        label: 20°
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_temperature
+          target:
+            entity_id: *climate
+          data:
+            temperature: 20
+      - type: button
+        name: ht22
+        icon: mdi:thermometer
+        label: 22°
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_temperature
+          target:
+            entity_id: *climate
+          data:
+            temperature: 22
+      - type: button
+        name: ht24
+        icon: mdi:thermometer
+        label: 24°
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_temperature
+          target:
+            entity_id: *climate
+          data:
+            temperature: 24
+      - type: button
+        name: ht26
+        icon: mdi:thermometer
+        label: 26°
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_temperature
+          target:
+            entity_id: *climate
+          data:
+            temperature: 26
+      - type: button
+        name: ht28
+        icon: mdi:thermometer
+        label: 28°
+        styles: "remote-button {\n  --icon-size: 26px;\n  padding: 10px;\n  margin: 6px;\n}\n.label {\n  font-size: 12px;\n}"
+        tap_action:
+          action: perform-action
+          perform_action: climate.set_temperature
+          target:
+            entity_id: *climate
+          data:
+            temperature: 28
+    rows:
+      - [h_on, h_off]
+      - [h_cool, h_heat, h_dry, h_fan, h_auto]
+      - [hw_si, hw_lo, hw_me]
+      - [hw_hi, hw_fu, hw_au]
+      - [ht20, ht22, ht24, ht26, ht28]
+
+  # ---------- 近30天每日用电 ----------
+  - type: custom:apexcharts-card
+    graph_span: 30d
+    header:
+      show: true
+      title: 近30天每日用电（度）
+    apex_config:
+      chart:
+        height: 200
+      legend:
+        show: false
+      xaxis:
+        labels:
+          datetimeFormatter:
+            year: yy年
+            month: M月
+            day: d日
+            hour: HH时
+    series:
+      - entity: sensor.fang_jian_kong_diao_jin_nian_hao_dian_liang
+        name: 每日用电
+        type: column
+        float_precision: 2
+        group_by:
+          duration: 1d
+          func: diff
+
+  # ---------- 扫风 / 无风感 ----------
+  - type: entities
+    title: 扫风 / 无风感
+    show_header_toggle: false
+    entities:
+      - entity: select.fang_jian_kong_diao_shang_xia_bai_dong_feng_xiang
+        name: 上下扫风
+        icon: mdi:arrow-up-down
+      - entity: select.fang_jian_kong_diao_zuo_you_bai_dong_feng_xiang
+        name: 左右扫风
+        icon: mdi:arrow-left-right
+      - entity: select.fang_jian_kong_diao_wu_feng_gan
+        name: 无风感
+        icon: mdi:weather-windy
+
+  # ---------- 更多功能 ----------
+  - type: entities
+    title: 更多功能
+    show_header_toggle: false
+    entities:
+      - entity: switch.fang_jian_kong_diao_dian_fu_re
+        name: 电辅热
+        icon: mdi:heating-coil
+      - entity: switch.fang_jian_kong_diao_fang_zhi_chui
+        name: 防直吹
+        icon: mdi:weather-windy
+      - entity: switch.fang_jian_kong_diao_gan_zao_fang_mei
+        name: 干燥防霉
+        icon: mdi:shimmer
+      - entity: switch.fang_jian_kong_diao_zhi_kong_wen
+        name: 智控温
+        icon: mdi:thermometer-auto
+      - entity: switch.fang_jian_kong_diao_sui_shen_gan
+        name: 随身感
+        icon: mdi:human-greeting
+      - entity: switch.fang_jian_kong_diao_xian_shi_kai_guan
+        name: 屏幕显示（睡觉可关）
+        icon: mdi:monitor-small
+      - entity: switch.fang_jian_kong_diao_feng_ming_qi
+        name: 蜂鸣器
+        icon: mdi:volume-high
+      - entity: switch.fang_jian_kong_diao_xin_feng_chu_jun
+        name: 新风除菌
+        icon: mdi:air-filter
