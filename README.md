@@ -9,7 +9,7 @@
 - [cbywyz/ha-hualing-fan-broadlink](https://github.com/cbywyz/ha-hualing-fan-broadlink) —— 华凌**风扇**（WH-FGA2401）红外接入教程：Broadlink RM3 学码 + 全套遥控器编码库。风扇没有 WiFi，走不了本教程的云端方案，遥控器这些键的码都收录了。
 - [cbywyz/gree-yapqf-broadlink-smartir](https://github.com/cbywyz/gree-yapqf-broadlink-smartir) —— 格力空调（YAPQF）Broadlink + SmartIR 接入教程：本地红外控制路线，含码表坑排查与学码补键。
 - [cbywyz/phicomm-aircat-m1](https://github.com/cbywyz/phicomm-aircat-m1) —— 斐讯悟空 M1 空气检测仪本地复活（自建集成 + 温湿度/PM2.5/甲醛），空调面板的温湿度数据源好搭档。
-- [cbywyz/ha-xiaomi-tv-kids-lock](https://github.com/cbywyz/ha-xiaomi-tv-kids-lock) —— 小米电视**家长管控**教程（HA 自动化）：音量上限锁 + 信号源锁定 + 儿童观看定时锁，管控放在电视外面，没有密码可破。
+- [cbywyz/ha-tv-kids-lock](https://github.com/cbywyz/ha-tv-kids-lock) —— 电视**家长管控**教程（HA 自动化，任意智能电视通用，以小米电视为例）：音量上限锁 + 信号源锁定 + 儿童观看定时锁，管控放在电视外面，没有密码可破。
 
 ## 为什么华凌要用云端方案？
 
