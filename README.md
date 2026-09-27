@@ -10,6 +10,7 @@
 - [cbywyz/gree-yapqf-broadlink-smartir](https://github.com/cbywyz/gree-yapqf-broadlink-smartir) —— 格力空调（YAPQF）Broadlink + SmartIR 接入教程：本地红外控制路线，含码表坑排查与学码补键。
 - [cbywyz/phicomm-aircat-m1](https://github.com/cbywyz/phicomm-aircat-m1) —— 斐讯悟空 M1 空气检测仪本地复活（自建集成 + 温湿度/PM2.5/甲醛），空调面板的温湿度数据源好搭档。
 - [cbywyz/ha-xiaomi-tv-kids-lock](https://github.com/cbywyz/ha-xiaomi-tv-kids-lock) —— 小米电视**家长管控**教程（HA 自动化）：音量上限锁 + 信号源锁定 + 儿童观看定时锁，管控放在电视外面，没有密码可破。
+
 ## 为什么华凌要用云端方案？
 
 | 方案 | 集成 | 美的 | 华凌 | 说明 |
